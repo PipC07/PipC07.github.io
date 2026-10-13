@@ -1,0 +1,92 @@
+
+---
+const links = [
+  { name: "Home", href: "/" },
+  { name: "Notes", href: "/logbook" },
+  { name: "Essays", href: "/essays" },
+  { name: "Fiction", href: "/fiction" },
+  { name: "About", href: "/about" },
+];
+
+const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
+---
+
+<div class="topline">
+  <span>PHILLIP CUSHMAN</span>
+  <span>PERSONAL ARCHIVE / EST. 2026</span>
+</div>
+
+<header>
+  <a class="logo" href="/">PC<span>.</span></a>
+
+  <nav aria-label="Main navigation">
+    {links.map((link) => (
+      <a
+        href={link.href}
+        class:list={{ active: currentPath === link.href }}
+        aria-current={currentPath === link.href ? "page" : undefined}
+      >
+        {link.name}
+      </a>
+    ))}
+  </nav>
+</header>
+
+<style>
+  .topline {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    background: #192C43;
+    color: #F0EEE5;
+    padding: 11px 6%;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 6%;
+    border-bottom: 1px solid #c8c3b5;
+  }
+
+  .logo {
+    color: #192C43;
+    font: 700 34px 'Space Grotesk', sans-serif;
+    letter-spacing: -3px;
+    text-decoration: none;
+  }
+
+  .logo span {
+    color: #557C9B;
+  }
+
+  nav {
+    display: flex;
+    gap: 30px;
+  }
+
+  nav a {
+    color: #192C43;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  nav a:hover,
+  nav a.active {
+    color: #557C9B;
+  }
+
+  @media (max-width: 760px) {
+    .topline { font-size: 8px; }
+    header { flex-direction: column; gap: 20px; }
+    nav { flex-wrap: wrap; justify-content: center; gap: 15px; }
+    nav a { font-size: 10px; }
+  }
+</style>

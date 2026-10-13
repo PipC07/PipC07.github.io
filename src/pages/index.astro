@@ -1,0 +1,406 @@
+
+---
+import Header from "../components/Header.astro";
+
+const recentWriting = [
+  {
+    category: "LOGBOOK / 001",
+    title: "The Beginning of Something",
+    description: "A place for thoughts, observations, adventures, and everything in between.",
+  },
+  {
+    category: "ESSAYS / 001",
+    title: "The Case for Wonder",
+    description: "Why the universe still deserves our curiosity.",
+  },
+  {
+    category: "FICTION / IN DEVELOPMENT",
+    title: "An Unfinished Universe",
+    description: "Stories about the worlds we discover and the worlds we create.",
+  },
+];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Phillip Cushman | Writing & Exploration</title>
+    <meta name="description" content="The personal writing, essays, and fiction of Phillip Cushman." />
+  </head>
+
+  <body>
+    <Header />
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">FIELD NOTES FROM A CURIOUS LIFE / VOL. 01</p>
+
+          <h1>Always<br />looking <em>up.</em></h1>
+
+          <p class="intro">
+            A personal collection of writing, ideas, and observations
+            on the world around us and the worlds beyond.
+          </p>
+
+          <a class="explore" href="#logbook">EXPLORE THE ARCHIVE &nbsp; ↗</a>
+        </div>
+
+        <div class="hero-art">
+          <div class="orbit orbit-one"></div>
+          <div class="orbit orbit-two"></div>
+          <div class="planet"></div>
+          <div class="star s1">✦</div>
+          <div class="star s2">+</div>
+          <div class="star s3">✧</div>
+          <div class="photo-label">FIG 01. / SOMEWHERE OUT THERE</div>
+        </div>
+      </section>
+
+      <div class="ticker">
+        <span>EXPLORATION</span>
+        <span>✳</span>
+        <span>WRITING</span>
+        <span>✳</span>
+        <span>SCIENCE</span>
+        <span>✳</span>
+        <span>STORYTELLING</span>
+      </div>
+
+      <section class="archive" id="logbook">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">SELECTED TRANSMISSIONS / 2026</p>
+            <h2>From the archive<span class="dot">.</span></h2>
+          </div>
+          <span class="issue">ISSUE NO. 001</span>
+        </div>
+
+        <div class="entries">
+          {recentWriting.map((entry, index) => (
+            <article class="entry" id={index === 1 ? "essays" : index === 2 ? "fiction" : undefined}>
+              <div class="entry-number">0{index + 1}</div>
+              <div>
+                <p class="eyebrow">{entry.category}</p>
+                <h3>{entry.title}</h3>
+                <p>{entry.description}</p>
+              </div>
+              <span class="arrow">↗</span>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="about" id="about">
+        <p class="eyebrow">A NOTE FROM THE AUTHOR</p>
+        <h2>For the love of<br /><em>the unknown.</em></h2>
+        <p>
+          I'm Phillip — an aerospace engineering student, aspiring
+          writer, and lifelong admirer of the extraordinary.
+          This is where I collect the things worth thinking about.
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <span>© 2026 PHILLIP CUSHMAN</span>
+      <span>MADE ON EARTH. / LOOKING OUTWARD.</span>
+    </footer>
+  </body>
+</html>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+  :global(*) {
+    box-sizing: border-box;
+  }
+
+  :global(html) {
+    scroll-behavior: smooth;
+  }
+
+  :global(body) {
+    margin: 0;
+    background: #F0EEE5;
+    color: #192C43;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .topline {
+    background: #192C43;
+    color: #eee9da;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 6%;
+    font-size: 10px;
+    letter-spacing: 2px;
+    font-weight: 700;
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 6%;
+    border-bottom: 1px solid #c8c3b5;
+  }
+
+  .logo {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 34px;
+    letter-spacing: -3px;
+    text-decoration: none;
+    color: #192C43;
+  }
+
+  .dot {
+    color: #557C9B;
+  }
+
+  nav {
+    display: flex;
+    gap: 30px;
+  }
+
+  nav a {
+    color: #192C43;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  nav a:hover {
+    color: #557C9B;
+  }
+
+  .hero {
+    min-height: 570px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid #c8c3b5;
+  }
+
+  .hero-copy {
+    padding: 100px 7% 100px 12%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .eyebrow {
+    font-size: 10px;
+    letter-spacing: 2px;
+    font-weight: 700;
+    color: #557C9B;
+    text-transform: uppercase;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  h1 {
+    font-size: clamp(64px, 7vw, 112px);
+    line-height: 0.95;
+    letter-spacing: -7px;
+    margin: 25px 0;
+  }
+
+  h1 em, h2 em {
+    font-style: normal;
+    color: #557C9B;
+  }
+
+  .intro {
+    max-width: 420px;
+    font-size: 17px;
+    line-height: 1.8;
+    color: #57616a;
+  }
+
+  .explore {
+    display: inline-block;
+    width: fit-content;
+    margin-top: 28px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #557C9B;
+    text-decoration: none;
+    color: #172b38;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    font-weight: 700;
+  }
+
+  .hero-art {
+    position: relative;
+    min-height: 450px;
+    background: radial-gradient(circle at 54% 43%, #344b58 0%, #182d3a 49%, #0e202b 100%);
+    overflow: hidden;
+  }
+
+  .planet {
+    position: absolute;
+    width: 270px;
+    height: 270px;
+    left: 50%;
+    top: 47%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(circle at 31% 28%, #b8d5e3, #648ca6 42%, #304d68 76%, #101e31 100%);
+    box-shadow: 30px 30px 90px #07151b;
+  }
+
+  .orbit {
+    position: absolute;
+    border: 1px solid #8195a450;
+    border-radius: 50%;
+    width: 520px;
+    height: 520px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-30deg) scaleY(.42);
+  }
+
+  .orbit-two {
+    transform: translate(-50%, -50%) rotate(42deg) scaleY(.6);
+  }
+
+  .star {
+    position: absolute;
+    color: #fff1d4;
+  }
+
+  .s1 { top: 16%; left: 19%; font-size: 22px; }
+  .s2 { top: 76%; left: 79%; font-size: 20px; }
+  .s3 { top: 28%; left: 83%; font-size: 25px; }
+
+  .photo-label {
+    position: absolute;
+    bottom: 24px;
+    left: 30px;
+    color: #d2cbbb;
+    font-size: 10px;
+    letter-spacing: 2px;
+  }
+
+  .ticker {
+    background: #557C9B;
+    color: #FFFFFF;
+    display: flex;
+    justify-content: space-around;
+    padding: 18px;
+    font-size: 11px;
+    letter-spacing: 3px;
+    font-weight: 700;
+  }
+
+  .archive {
+    padding: 100px 8%;
+  }
+
+  .section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-bottom: 45px;
+  }
+
+  .section-heading h2 {
+    font-size: clamp(36px, 4vw, 60px);
+    letter-spacing: -2px;
+    margin: 10px 0;
+  }
+
+  .issue {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: #73736b;
+  }
+
+  .entry {
+    border-top: 1px solid #bdb7a9;
+    display: grid;
+    grid-template-columns: 80px 1fr 30px;
+    align-items: start;
+    padding: 28px 0;
+  }
+
+  .entry:last-child {
+    border-bottom: 1px solid #bdb7a9;
+  }
+
+  .entry-number {
+    color: #557C9B;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 23px;
+    font-weight: 700;
+  }
+
+  .entry h3 {
+    font-size: 28px;
+    letter-spacing: -1px;
+    margin: 8px 0;
+  }
+
+  .entry p:not(.eyebrow) {
+    color: #67717a;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .arrow {
+    color: #557C9B;
+    font-size: 23px;
+  }
+
+  .about {
+    background: #172b38;
+    color: #F0EEE5;
+    padding: 100px 8%;
+  }
+
+  .about h2 {
+    font-size: clamp(42px, 6vw, 82px);
+    letter-spacing: -3px;
+    line-height: 1.05;
+    margin: 20px 0;
+  }
+
+  .about p:last-child {
+    max-width: 550px;
+    line-height: 1.9;
+    color: #b9c2c3;
+    font-size: 16px;
+  }
+
+  footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 25px 6%;
+    background: #101f29;
+    color: #c4c9c7;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+  }
+
+  @media (max-width: 760px) {
+    .topline { font-size: 8px; }
+    header { flex-direction: column; gap: 20px; }
+    nav { gap: 14px; flex-wrap: wrap; justify-content: center; }
+    nav a { font-size: 10px; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-copy { padding: 75px 7%; }
+    h1 { letter-spacing: -4px; }
+    .hero-art { min-height: 370px; }
+    .ticker { flex-wrap: wrap; gap: 14px; font-size: 9px; }
+    .archive { padding: 70px 7%; }
+    .entry { grid-template-columns: 40px 1fr 20px; }
+    .entry h3 { font-size: 22px; }
+    footer { flex-direction: column; gap: 12px; }
+  }
+</style>

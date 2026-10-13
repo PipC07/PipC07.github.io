@@ -1,0 +1,435 @@
+
+---
+import Header from "../components/Header.astro";
+
+const interests = [
+  "Science & Exploration",
+  "Fiction & Storytelling",
+  "Literature",
+  "Philosophy & Ideas",
+];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="About Phillip Cushman, his writing, essays, and fiction."
+    />
+    <title>About | Phillip Cushman</title>
+  </head>
+
+  <body>
+    <Header />
+
+    <main>
+      <section class="hero">
+        <div class="hero-inner">
+          <p class="eyebrow">THE AUTHOR / INTRODUCTION</p>
+          <h1>About<span>.</span></h1>
+          <div class="hero-rule"></div>
+          <p class="hero-subtitle">
+            On writing, curiosity, and the ideas worth exploring.
+          </p>
+        </div>
+
+        <div class="vertical-label">PERSONAL ARCHIVE — 2026</div>
+      </section>
+
+      <section class="biography">
+        <aside class="sidebar">
+          <span class="section-number">01 / INTRODUCTION</span>
+          <div class="sidebar-rule"></div>
+          <span class="sidebar-label">PHILLIP CUSHMAN</span>
+          <span class="sidebar-subtitle">WRITER / STUDENT</span>
+        </aside>
+
+        <div class="bio-content">
+          <h2>A few words<br />of introduction<span>.</span></h2>
+
+          <p class="lead">
+            I'm Phillip Cushman, an aspiring writer with an interest
+            in science, exploration, and the questions that arise
+            from both.
+          </p>
+
+          <p>
+            This website serves as a collection of my writing,
+            from essays and observations to works of fiction.
+            My interests are varied, but much of what I write
+            explores discovery, human ambition, and our
+            relationship with the world around us.
+          </p>
+
+          <p>
+            Above all, this is a place to develop ideas,
+            experiment with storytelling, and share work
+            as it takes shape.
+          </p>
+        </div>
+      </section>
+
+      <section class="interests">
+        <div class="section-heading">
+          <p class="eyebrow">SUBJECTS & INTERESTS</p>
+          <h2>Recurring themes<span>.</span></h2>
+          <p>
+            A few subjects that tend to find their way into my writing.
+          </p>
+        </div>
+
+        <div class="interest-list">
+          {interests.map((interest, index) => (
+            <div class="interest-row">
+              <span class="interest-number">0{index + 1}</span>
+              <span class="interest-name">{interest}</span>
+              <span class="interest-mark">↗</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="closing">
+        <p class="eyebrow">THE WORK CONTINUES</p>
+        <h2>Ideas are meant<br />to be <em>explored.</em></h2>
+        <p>
+          Browse the essays, explore the fiction, or see what
+          I've been working on recently.
+        </p>
+
+        <div class="closing-links">
+          <a href="/essays">READ ESSAYS ↗</a>
+          <a href="/fiction">EXPLORE FICTION ↗</a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>© 2026 PHILLIP CUSHMAN</span>
+      <span>MADE ON EARTH. / LOOKING OUTWARD.</span>
+    </footer>
+  </body>
+</html>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+  :global(*) {
+    box-sizing: border-box;
+  }
+
+  :global(html) {
+    scroll-behavior: smooth;
+  }
+
+  :global(body) {
+    margin: 0;
+    background: #F0EEE5;
+    color: #192C43;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .topline {
+    display: flex;
+    justify-content: space-between;
+    background: #192C43;
+    color: #F0EEE5;
+    padding: 11px 6%;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 6%;
+    border-bottom: 1px solid #c8c3b5;
+  }
+
+  .logo {
+    color: #192C43;
+    font: 700 34px 'Space Grotesk', sans-serif;
+    letter-spacing: -3px;
+    text-decoration: none;
+  }
+
+  .logo span,
+  h1 span,
+  h2 span {
+    color: #557C9B;
+  }
+
+  nav {
+    display: flex;
+    gap: 30px;
+  }
+
+  nav a {
+    color: #192C43;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  nav a:hover,
+  nav a.active {
+    color: #557C9B;
+  }
+
+  h1, h2 {
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  .eyebrow {
+    color: #557C9B;
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .hero {
+    min-height: 435px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 80px 9%;
+    background: linear-gradient(
+      115deg,
+      #F0EEE5 0%,
+      #E2E5E1 65%,
+      #B9CAD2 100%
+    );
+    border-bottom: 1px solid #C1C6C4;
+    overflow: hidden;
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  h1 {
+    font-size: clamp(90px, 12vw, 170px);
+    letter-spacing: -10px;
+    line-height: 1;
+    margin: 17px 0 30px;
+  }
+
+  .hero-rule {
+    width: 90px;
+    height: 4px;
+    background: #557C9B;
+    margin-bottom: 25px;
+  }
+
+  .hero-subtitle {
+    font-size: 18px;
+    color: #536779;
+    line-height: 1.8;
+  }
+
+  .vertical-label {
+    position: absolute;
+    right: 35px;
+    top: 50%;
+    transform: translateY(-50%) rotate(90deg);
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: #657D8C;
+    white-space: nowrap;
+  }
+
+  .biography {
+    display: grid;
+    grid-template-columns: 1fr 2.2fr;
+    gap: 80px;
+    padding: 110px 9% 130px;
+  }
+
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+  }
+
+  .section-number {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #557C9B;
+  }
+
+  .sidebar-rule {
+    height: 1px;
+    background: #B6C0C3;
+    width: 100%;
+    margin: 12px 0;
+  }
+
+  .sidebar-label {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+  }
+
+  .sidebar-subtitle {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: #7B8B93;
+  }
+
+  .bio-content {
+    max-width: 720px;
+  }
+
+  .bio-content h2 {
+    font-size: clamp(42px, 5vw, 72px);
+    letter-spacing: -3px;
+    line-height: 1.1;
+    margin: 0 0 45px;
+  }
+
+  .bio-content p {
+    font-size: 17px;
+    line-height: 2;
+    color: #566979;
+    margin-bottom: 25px;
+  }
+
+  .bio-content .lead {
+    font-size: 23px;
+    line-height: 1.7;
+    color: #192C43;
+    font-weight: 500;
+  }
+
+  .interests {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 70px;
+    padding: 110px 9%;
+    background: #E4E8E7;
+  }
+
+  .section-heading h2 {
+    font-size: clamp(40px, 4vw, 58px);
+    letter-spacing: -2px;
+    margin: 18px 0;
+  }
+
+  .section-heading > p:last-child {
+    max-width: 370px;
+    font-size: 15px;
+    line-height: 1.8;
+    color: #667884;
+  }
+
+  .interest-row {
+    display: grid;
+    grid-template-columns: 50px 1fr 20px;
+    align-items: center;
+    border-top: 1px solid #B9C4C8;
+    padding: 25px 0;
+  }
+
+  .interest-row:last-child {
+    border-bottom: 1px solid #B9C4C8;
+  }
+
+  .interest-number {
+    font-size: 12px;
+    color: #557C9B;
+    font-weight: 700;
+  }
+
+  .interest-name {
+    font: 600 clamp(18px, 2vw, 27px) 'Space Grotesk', sans-serif;
+  }
+
+  .interest-mark {
+    color: #557C9B;
+    font-size: 20px;
+  }
+
+  .closing {
+    background: #192C43;
+    color: #F0EEE5;
+    padding: 110px 9%;
+  }
+
+  .closing h2 {
+    font-size: clamp(48px, 6vw, 84px);
+    line-height: 1.05;
+    letter-spacing: -4px;
+    margin: 25px 0;
+  }
+
+  .closing em {
+    color: #A9BDC8;
+    font-style: normal;
+  }
+
+  .closing > p:not(.eyebrow) {
+    max-width: 520px;
+    font-size: 17px;
+    line-height: 1.8;
+    color: #B9C9D3;
+  }
+
+  .closing-links {
+    display: flex;
+    gap: 35px;
+    flex-wrap: wrap;
+    margin-top: 40px;
+  }
+
+  .closing-links a {
+    color: #F0EEE5;
+    border-bottom: 2px solid #87A9C1;
+    padding-bottom: 10px;
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+  }
+
+  footer {
+    display: flex;
+    justify-content: space-between;
+    background: #0D1D2D;
+    color: #D2DCE1;
+    padding: 30px 6%;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+  }
+
+  @media (max-width: 760px) {
+    .topline { font-size: 8px; gap: 10px; }
+    header { flex-direction: column; gap: 20px; }
+    nav { flex-wrap: wrap; justify-content: center; gap: 15px; }
+    nav a { font-size: 10px; }
+    .hero { min-height: 340px; padding: 60px 7%; }
+    h1 { letter-spacing: -5px; }
+    .vertical-label { display: none; }
+    .biography {
+      grid-template-columns: 1fr;
+      gap: 35px;
+      padding: 75px 7%;
+    }
+    .bio-content h2 { margin-bottom: 30px; }
+    .interests {
+      grid-template-columns: 1fr;
+      gap: 35px;
+      padding: 75px 7%;
+    }
+    .closing { padding: 80px 7%; }
+    footer { flex-direction: column; gap: 15px; }
+  }
+</style>
