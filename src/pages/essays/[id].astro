@@ -1,0 +1,180 @@
+
+---
+import Header from "../../components/Header.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const essays = await getCollection("essays");
+
+  return essays
+    .filter((essay) => !essay.data.draft)
+    .map((essay) => ({
+      params: { id: essay.id },
+      props: { essay },
+    }));
+}
+
+const { essay } = Astro.props;
+const { Content } = await render(essay);
+
+function formatDate(date: Date) {
+  const day = date.getUTCDate();
+  const suffix =
+    day % 100 >= 11 && day % 100 <= 13 ? "th"
+    : day % 10 === 1 ? "st"
+    : day % 10 === 2 ? "nd"
+    : day % 10 === 3 ? "rd" : "th";
+
+  const month = date.toLocaleDateString("en-US", {
+    month: "long",
+    timeZone: "UTC",
+  });
+
+  return `${month} ${day}${suffix}, ${date.getUTCFullYear()}`;
+}
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{essay.data.title} | Phillip Cushman</title>
+    <meta name="description" content={essay.data.description} />
+  </head>
+
+  <body>
+    <Header />
+
+    <main>
+      <article>
+        <a class="back" href="/essays">← BACK TO ESSAYS</a>
+
+        <p class="eyebrow">THE WRITING ARCHIVE / ESSAYS</p>
+        <h1>{essay.data.title}</h1>
+        <p class="description">{essay.data.description}</p>
+
+        <div class="metadata">
+          <span>{formatDate(essay.data.date)}</span>
+          <span>PHILLIP CUSHMAN</span>
+        </div>
+
+        <div class="prose">
+          <Content />
+        </div>
+
+        <div class="ending">
+          <span>END OF ARTICLE / ✳</span>
+          <a href="/essays">MORE ESSAYS ↗</a>
+        </div>
+      </article>
+    </main>
+
+    <footer>
+      <span>© 2026 PHILLIP CUSHMAN</span>
+      <span>MADE ON EARTH. / LOOKING OUTWARD.</span>
+    </footer>
+  </body>
+</html>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+  :global(*) { box-sizing: border-box; }
+  :global(body) {
+    margin: 0;
+    background: #F0EEE5;
+    color: #192C43;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  main { padding: 90px 7% 130px; }
+  article { max-width: 790px; margin: auto; }
+
+  .back, .eyebrow, .ending {
+    color: #557C9B;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+  }
+
+  .back { display: inline-block; margin-bottom: 65px; text-decoration: none; }
+
+  h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(46px, 6vw, 82px);
+    line-height: 1.1;
+    letter-spacing: -3px;
+    margin: 20px 0;
+  }
+
+  .description { color: #617789; font-size: 20px; line-height: 1.7; }
+
+  .metadata {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 20px 0;
+    margin: 40px 0 60px;
+    border-top: 1px solid #BFC5C3;
+    border-bottom: 1px solid #BFC5C3;
+    color: #557C9B;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  .prose {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 20px;
+    line-height: 1.95;
+    color: #293C48;
+    overflow-wrap: break-word;
+  }
+
+  .prose :global(p) { margin-bottom: 28px; }
+  .prose :global(h1),
+  .prose :global(h2),
+  .prose :global(h3) {
+    font-family: 'Space Grotesk', sans-serif;
+    line-height: 1.3;
+    margin-top: 45px;
+  }
+
+  .prose :global(a) { color: #557C9B; }
+  .prose :global(img) { max-width: 100%; height: auto; }
+
+  .prose :global(blockquote) {
+    border-left: 3px solid #557C9B;
+    padding-left: 24px;
+    font-style: italic;
+    color: #617789;
+  }
+
+  .ending {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 90px;
+    padding-top: 25px;
+    border-top: 1px solid #BFC5C3;
+  }
+
+  .ending a { color: #557C9B; text-decoration: none; }
+
+  footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    background: #192C43;
+    color: #F0EEE5;
+    padding: 30px 6%;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+  }
+
+  @media(max-width: 700px) {
+    main { padding: 60px 7% 90px; }
+    .prose { font-size: 18px; }
+    .metadata, .ending, footer { flex-direction: column; }
+  }
+</style>
