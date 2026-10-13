@@ -1,0 +1,77 @@
+
+media:
+  input: public/images
+  output: /images
+
+content:
+  - name: essays
+    label: Essays
+    type: collection
+    path: src/content/essays
+    format: yaml-frontmatter
+    filename: "{primary}.md"
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: description
+        label: Description
+        type: text
+      - name: date
+        label: Date
+        type: date
+      - name: draft
+        label: Draft
+        type: boolean
+      - name: body
+        label: Article
+        type: rich-text
+
+  - name: fiction
+    label: Fiction
+    type: collection
+    path: src/content/fiction
+    format: yaml-frontmatter
+    filename: "{primary}.md"
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: description
+        label: Description
+        type: text
+      - name: date
+        label: Date
+        type: date
+      - name: draft
+        label: Draft
+        type: boolean
+      - name: body
+        label: Story
+        type: rich-text
+
+  - name: notes
+    label: Notes
+    type: collection
+    path: src/content/notes
+    format: yaml-frontmatter
+    filename: "{primary}.md"
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: description
+        label: Description
+        type: text
+      - name: date
+        label: Date
+        type: date
+      - name: draft
+        label: Draft
+        type: boolean
+      - name: body
+        label: Content
+        type: rich-text
