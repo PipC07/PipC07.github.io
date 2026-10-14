@@ -1,25 +1,56 @@
 
+
 ---
 import Header from "../components/Header.astro";
+import { getCollection } from "astro:content";
+
+const essays = await getCollection("essays", ({ data }) => !data.draft);
+const fiction = await getCollection("fiction", ({ data }) => !data.draft);
+const notes = await getCollection("notes", ({ data }) => !data.draft);
 
 const recentWriting = [
-  {
-    category: "LOGBOOK / 001",
-    title: "The Beginning of Something",
-    description: "A place for thoughts, observations, adventures, and everything in between.",
-  },
-  {
-    category: "ESSAYS / 001",
-    title: "The Case for Wonder",
-    description: "Why the universe still deserves our curiosity.",
-  },
-  {
-    category: "FICTION / IN DEVELOPMENT",
-    title: "An Unfinished Universe",
-    description: "Stories about the worlds we discover and the worlds we create.",
-  },
-];
+  ...essays.map((post) => ({
+    title: post.data.title,
+    description: post.data.description,
+    date: post.data.date,
+    category: "ESSAYS",
+    url: `/essays/${post.id}/`,
+  })),
+  ...fiction.map((post) => ({
+    title: post.data.title,
+    description: post.data.description,
+    date: post.data.date,
+    category: "FICTION",
+    url: `/fiction/${post.id}/`,
+  })),
+  ...notes.map((post) => ({
+    title: post.data.title,
+    description: post.data.description,
+    date: post.data.date,
+    category: "NOTES",
+    url: `/notes/${post.id}/`,
+  })),
+]
+  .sort((a, b) => b.date.getTime() - a.date.getTime())
+  .slice(0, 5);
+
+function formatDate(date: Date) {
+  const day = date.getUTCDate();
+  const suffix =
+    day % 100 >= 11 && day % 100 <= 13 ? "th"
+    : day % 10 === 1 ? "st"
+    : day % 10 === 2 ? "nd"
+    : day % 10 === 3 ? "rd" : "th";
+
+  const month = date.toLocaleDateString("en-US", {
+    month: "long",
+    timeZone: "UTC",
+  });
+
+  return `${month} ${day}${suffix}, ${date.getUTCFullYear()}`;
+}
 ---
+
 
 <html lang="en">
   <head>
@@ -68,29 +99,51 @@ const recentWriting = [
         <span>STORYTELLING</span>
       </div>
 
-      <section class="archive" id="logbook">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">SELECTED TRANSMISSIONS / 2026</p>
-            <h2>From the archive<span class="dot">.</span></h2>
-          </div>
-          <span class="issue">ISSUE NO. 001</span>
-        </div>
+      
+<section class="archive" id="whats-new">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">LATEST FROM THE ARCHIVE / 2026</p>
+      <h2>What's New<span class="dot">.</span></h2>
+    </div>
+    <span class="issue">RECENT WRITING / 001—</span>
+  </div>
 
-        <div class="entries">
-          {recentWriting.map((entry, index) => (
-            <article class="entry" id={index === 1 ? "essays" : index === 2 ? "fiction" : undefined}>
-              <div class="entry-number">0{index + 1}</div>
-              <div>
-                <p class="eyebrow">{entry.category}</p>
-                <h3>{entry.title}</h3>
-                <p>{entry.description}</p>
-              </div>
-              <span class="arrow">↗</span>
-            </article>
-          ))}
-        </div>
-      </section>
+  <div class="entries">
+    {recentWriting.length === 0 ? (
+      <p>No writing has been published yet.</p>
+    ) : (
+      recentWriting.map((entry, index) => (
+        <article class="entry">
+          <div class="entry-number">
+            {String(index + 1).padStart(2, "0")}
+          </div>
+
+          <div>
+            <p class="eyebrow">
+              {entry.category} / {formatDate(entry.date)}
+            </p>
+
+            <h3>
+              <a href={entry.url}>{entry.title}</a>
+            </h3>
+
+            <p>{entry.description}</p>
+          </div>
+
+          <a
+            class="arrow"
+            href={entry.url}
+            aria-label={`Read ${entry.title}`}
+          >
+            ↗
+          </a>
+        </article>
+      ))
+    )}
+  </div>
+</section>
+
 
       <section class="about" id="about">
         <p class="eyebrow">A NOTE FROM THE AUTHOR</p>
@@ -403,4 +456,18 @@ const recentWriting = [
     .entry h3 { font-size: 22px; }
     footer { flex-direction: column; gap: 12px; }
   }
+  .entry h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.entry h3 a:hover {
+  color: #557C9B;
+}
+
+.entry .arrow {
+  color: #557C9B;
+  text-decoration: none;
+  font-size: 24px;
+}
 </style>
