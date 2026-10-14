@@ -1,0 +1,334 @@
+
+---
+import Header from "../components/Header.astro";
+import { getCollection } from "astro:content";
+
+const notes = (await getCollection("notes"))
+  .filter((note) => !note.data.draft)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+function formatDate(date: Date) {
+  const day = date.getUTCDate();
+  const suffix =
+    day % 100 >= 11 && day % 100 <= 13 ? "th"
+    : day % 10 === 1 ? "st"
+    : day % 10 === 2 ? "nd"
+    : day % 10 === 3 ? "rd" : "th";
+
+  const month = date.toLocaleDateString("en-US", {
+    month: "long",
+    timeZone: "UTC",
+  });
+
+  return `${month} ${day}${suffix}, ${date.getUTCFullYear()}`;
+}
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notes | Phillip Cushman</title>
+    <meta
+      name="description"
+      content="Notes, shorter writing, and occasional updates by Phillip Cushman."
+    />
+  </head>
+
+  <body>
+    <Header />
+
+    <main>
+      <section class="intro">
+        <p class="eyebrow">PERSONAL ARCHIVE / NOTES</p>
+        <h1>Notes<span>.</span></h1>
+        <p class="subtitle">
+          Shorter thoughts, observations, and ideas that don't
+          quite call for an essay. An informal collection of
+          things worth sharing.
+        </p>
+      </section>
+
+      <section class="entries">
+        <div class="section-heading">
+          <p class="eyebrow">NOTES / THE ARCHIVE</p>
+          <span class="archive-label">EST. 2026</span>
+        </div>
+
+        {notes.length === 0 ? (
+          <div class="empty">
+            <h2>Nothing here just yet.</h2>
+            <p>
+              This section is still taking shape.
+              New notes will appear here as they're published.
+            </p>
+          </div>
+        ) : (
+          notes.map((note, index) => (
+            <article class="entry">
+              <span class="date">{formatDate(note.data.date)}</span>
+
+              <div class="entry-content">
+                <p class="eyebrow">
+                  NOTE / {String(notes.length - index).padStart(3, "0")}
+                </p>
+
+                <h2>
+                  <a href={`/notes/${note.id}/`}>
+                    {note.data.title}
+                  </a>
+                </h2>
+
+                <p class="description">{note.data.description}</p>
+
+                <a class="read-link" href={`/notes/${note.id}/`}>
+                  READ NOTE ↗
+                </a>
+              </div>
+
+              <span class="arrow">↗</span>
+            </article>
+          ))
+        )}
+      </section>
+
+      <section class="closing">
+        <p class="eyebrow">THOUGHTS / OBSERVATIONS / IDEAS</p>
+        <h2>Not everything<br />needs to be <em>an essay.</em></h2>
+        <p>
+          Sometimes an interesting idea is worth sharing
+          simply because it's interesting.
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <span>© 2026 PHILLIP CUSHMAN</span>
+      <span>MADE ON EARTH. / LOOKING OUTWARD.</span>
+    </footer>
+  </body>
+</html>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+  :global(*) {
+    box-sizing: border-box;
+  }
+
+  :global(html) {
+    scroll-behavior: smooth;
+  }
+
+  :global(body) {
+    margin: 0;
+    background: #F0EEE5;
+    color: #192C43;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  h1, h2 {
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  .eyebrow {
+    color: #557C9B;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .intro {
+    padding: 105px 8%;
+    background: linear-gradient(
+      120deg,
+      #F0EEE5 55%,
+      #DCE5E8 100%
+    );
+    border-bottom: 1px solid #C8C3B5;
+  }
+
+  h1 {
+    font-size: clamp(62px, 9vw, 120px);
+    letter-spacing: -6px;
+    line-height: 1;
+    margin: 20px 0 30px;
+  }
+
+  h1 span {
+    color: #557C9B;
+  }
+
+  .subtitle {
+    max-width: 570px;
+    font-size: 18px;
+    line-height: 1.85;
+    color: #536574;
+  }
+
+  .entries {
+    padding: 90px 8% 120px;
+    min-height: 440px;
+  }
+
+  .section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 45px;
+  }
+
+  .archive-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #8796A0;
+  }
+
+  .entry {
+    display: grid;
+    grid-template-columns: 150px 1fr 30px;
+    gap: 25px;
+    padding: 35px 0;
+    border-top: 1px solid #BFC5C3;
+    align-items: start;
+  }
+
+  .entry:last-of-type {
+    border-bottom: 1px solid #BFC5C3;
+  }
+
+  .date {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #557C9B;
+  }
+
+  .entry h2 {
+    font-size: clamp(25px, 3vw, 36px);
+    letter-spacing: -1px;
+    margin: 12px 0;
+  }
+
+  .entry h2 a {
+    color: #192C43;
+    text-decoration: none;
+  }
+
+  .entry h2 a:hover {
+    color: #557C9B;
+  }
+
+  .description {
+    max-width: 660px;
+    color: #687681;
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  .read-link {
+    display: inline-block;
+    color: #557C9B;
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    border-bottom: 2px solid #87A9C1;
+    padding-bottom: 7px;
+    margin-top: 12px;
+  }
+
+  .arrow {
+    color: #557C9B;
+    font-size: 22px;
+  }
+
+  .empty {
+    padding: 55px 0;
+    border-top: 1px solid #BFC5C3;
+    border-bottom: 1px solid #BFC5C3;
+  }
+
+  .empty h2 {
+    font-size: 30px;
+  }
+
+  .empty p {
+    color: #687681;
+    font-size: 16px;
+    line-height: 1.8;
+  }
+
+  .closing {
+    background: #192C43;
+    color: #F0EEE5;
+    padding: 100px 8%;
+  }
+
+  .closing h2 {
+    font-size: clamp(44px, 6vw, 80px);
+    line-height: 1.1;
+    letter-spacing: -3px;
+    margin: 20px 0;
+  }
+
+  .closing em {
+    font-style: normal;
+    color: #A9BDC8;
+  }
+
+  .closing > p:last-child {
+    max-width: 520px;
+    font-size: 16px;
+    line-height: 1.9;
+    color: #B9C9D3;
+  }
+
+  footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 30px 6%;
+    background: #0D1D2D;
+    color: #D2DCE1;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+  }
+
+  @media (max-width: 760px) {
+    .intro {
+      padding: 75px 7%;
+    }
+
+    h1 {
+      letter-spacing: -4px;
+    }
+
+    .entries {
+      padding: 70px 7%;
+    }
+
+    .entry {
+      grid-template-columns: 1fr 25px;
+      gap: 12px;
+    }
+
+    .date {
+      grid-column: 1 / -1;
+    }
+
+    .section-heading {
+      gap: 15px;
+    }
+
+    .closing {
+      padding: 80px 7%;
+    }
+
+    footer {
+      flex-direction: column;
+    }
+  }
+</style>
